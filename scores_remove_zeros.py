@@ -16,10 +16,5 @@ smprcon.connect()
 world_path = cfg['server']['world']
 scoreboards = nbt.NBTFile(os.path.join(world_path, 'data', 'scoreboard.dat'))['data']
 
-new_player = input("Enter new IGN: ")
-old_player = input("Enter old IGN: ")
-
-for score in filter(lambda x: x['Name'].value == old_player, scoreboards['PlayerScores']):
-    smprcon.command(f"/scoreboard players set {new_player} {score['Objective'].value} {score['Score'].value}")
-
-print("Check if the scores have transferred. If they have, then run '/scoreboard players reset " + old_player + "'")
+for score in filter(lambda x: x['Score'].value == 0, scoreboards['PlayerScores']):
+    smprcon.command(f"/scoreboard players reset {score['Name'].value} {score['Objective'].value}")
